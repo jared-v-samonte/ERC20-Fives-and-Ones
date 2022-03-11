@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, View} from 'react-native';
-import {ContractFactory, BigNumber, providers} from 'ethers';
+import {ContractFactory, utils, providers} from 'ethers';
 import oof_abi from './smart_contracts/OOFAbi'; 
 import oof_bytecode from './smart_contracts/OOFBytecode';  
 require('dotenv').config();
@@ -18,28 +18,27 @@ class Convert extends Component {
     const signersAddress = await signer.getAddress()
     console.log("Account:", signersAddress);
 
-    const amount = BigNumber.from(this.state.amount)
+    const number = utils.parseUnits(this.state.amount, 18)
+
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    await oof.convert_to_ones(signersAddress, number);
+  }
 
 
-    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x5EE3Dd2bFa437ae04d9BA5C74Ed1b989e060fb0C")
-    await oof.convert_to_ones(signersAddress, amount);
-    }
+  async convertToFives () {
 
+    await window.ethereum.request({method: 'eth_requestAccounts'});
+    const provider = new providers.Web3Provider(window.ethereum);
 
-    async convertToFives () {
+    const signer = await provider.getSigner()
+    const signersAddress = await signer.getAddress()
+    console.log("Account:", signersAddress);
 
-      await window.ethereum.request({method: 'eth_requestAccounts'});
-      const provider = new providers.Web3Provider(window.ethereum);
-  
-      const signer = await provider.getSigner()
-      const signersAddress = await signer.getAddress()
-      console.log("Account:", signersAddress);
+    const number = utils.parseUnits(this.state.amount, 18)
 
-      const amount = BigNumber.from(this.state.amount)
-  
-      const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x5EE3Dd2bFa437ae04d9BA5C74Ed1b989e060fb0C")
-      await oof.convert_to_fives(signer.address, amount);
-      }
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    await oof.convert_to_fives(signersAddress, number);
+  }
 
   constructor(props) 
   {
@@ -49,6 +48,7 @@ class Convert extends Component {
       amount: null,
     }
     this.convertToOnes = this.convertToOnes.bind(this)
+    this.convertToFives = this.convertToFives.bind(this)
   }
 
 
@@ -56,7 +56,7 @@ class Convert extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
   
-      <h1>Mint Ones</h1>
+      <h1>Convert OOF</h1>
 
       <h8></h8>
       <Button
@@ -128,9 +128,9 @@ class Convert extends Component {
     </div></form> 
 
     <ul>
-      <li>Ones' Address:  0x74916Bbec7Dca2E4D6bD626492E84c2980A5ab46</li>
-      <li>Five's Address:  0x20b980b7ECce5df3D23EfeB211CD5572f2885621</li>
-    </ul>      
+      <li>Ones' Address:  0xB71a1D29DA98f68Bc0c7177E4a94f17684520614</li>
+      <li>Five's Address:  0x7C8E67FeB0d186Bb62311C68648a2463b118A1D3</li>
+    </ul>        
     </View>
     )
   }

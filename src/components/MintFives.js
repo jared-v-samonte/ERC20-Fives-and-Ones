@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, View} from 'react-native';
-import {ContractFactory, BigNumber, providers} from 'ethers';
+import {ContractFactory, utils, providers} from 'ethers';
 import oof_abi from './smart_contracts/OOFAbi'; 
 import oof_bytecode from './smart_contracts/OOFBytecode';  
 require('dotenv').config();
@@ -18,12 +18,13 @@ class MintFives extends Component {
     const signer = await provider.getSigner()
     const signersAddress = await signer.getAddress()
 
-    const amount = BigNumber.from(this.state.amount)
     console.log("Account:", signersAddress);
+    
+    const number = utils.parseUnits(this.state.amount, 18)
 
     console.log("Minting this amount:", this.state.amount)
-    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x5EE3Dd2bFa437ae04d9BA5C74Ed1b989e060fb0C")
-    await oof.mint_fives(signersAddress, amount);
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    await oof.mint_fives(signersAddress, number);
     console.log("all done!!")
     }
 
@@ -83,8 +84,8 @@ class MintFives extends Component {
     </div></form> 
 
     <ul>
-      <li>Five's Address:  0x20b980b7ECce5df3D23EfeB211CD5572f2885621</li>
-    </ul>     
+      <li>Five's Address:  0x7C8E67FeB0d186Bb62311C68648a2463b118A1D3</li>
+    </ul>    
     </View>
     )
   }
