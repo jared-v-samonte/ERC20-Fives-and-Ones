@@ -1,0 +1,64 @@
+
+    string private  _name;
+    string private  _symbol;
+    uint256 private _value;
+
+    constructor(uint256 value, uint256 amount) ERC20(_name, _symbol) 
+    {
+        _value = value;
+        if(value == 1)
+        {
+            _name = "Ones";
+            _symbol = "ONE";
+        }
+        if(value == 5)
+        {
+            _name = "Five";
+            _symbol = "FVE";
+        }
+        _mint(msg.sender, amount);
+    }
+
+    function value() public virtual view returns (uint256)
+    {
+        return _value;
+    }
+
+    function name() public override virtual view returns (string memory)
+    {
+        return _name;
+    }
+
+    function symbol() public override virtual view returns (string memory)
+    {
+        return _symbol;
+    }
+}
+
+contract SpareChange{
+    OnesOrFive OOF;
+    address burn;
+
+    constructor(address token) {
+        burn = 0x000000000000000000000000000000000000dEaD;
+        OOF = OnesOrFive(token);
+    }
+
+    function convert_to_fives() public payable{ 
+        require(OOF.value() == 1);
+        uint256 amount = msg.value;
+        OOF.approve(msg.sender, amount);
+        OOF.transferFrom(msg.sender, burn, amount);
+        uint256 new_amount = amount/5;
+        new OnesOrFive(5, new_amount);
+    }
+
+    function convert_to_ones() public payable{ 
+        require(OOF.value() == 5);
+        uint256 amount = msg.value;
+        OOF.approve(msg.sender, amount);
+        OOF.transferFrom(msg.sender, burn, amount);
+        uint256 new_amount = amount*5;
+        new OnesOrFive(1, new_amount);
+    }
+}
