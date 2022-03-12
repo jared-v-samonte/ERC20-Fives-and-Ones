@@ -59,6 +59,7 @@ contract Ones is ERC20{
         fives_contract = Five(fives);
         address_not_set = false; // make sures address is not reset
     }
+    
 
     function convert(address minted_to, uint256 amount) public{ 
         //burns ones

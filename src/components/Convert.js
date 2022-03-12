@@ -20,7 +20,7 @@ class Convert extends Component {
 
     const number = utils.parseUnits(this.state.amount, 18)
 
-    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0xE41d8b14cDD350ceA154e1e28AbF25802ec9A272")
     await oof.convert_to_ones(signersAddress, number);
   }
 
@@ -36,7 +36,7 @@ class Convert extends Component {
 
     const number = utils.parseUnits(this.state.amount, 18)
 
-    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0xE41d8b14cDD350ceA154e1e28AbF25802ec9A272")
     await oof.convert_to_fives(signersAddress, number);
   }
 
@@ -45,6 +45,7 @@ class Convert extends Component {
     super(props)
     this.state = 
     {
+      signersAddress:null,
       amount: null,
     }
     this.convertToOnes = this.convertToOnes.bind(this)
@@ -54,6 +55,8 @@ class Convert extends Component {
 
   render() {
     return (
+
+      
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
   
       <h1>Convert OOF</h1>
@@ -66,7 +69,7 @@ class Convert extends Component {
 
     <form onSubmit={(event) => {
       event.preventDefault()
-      const temp_amount = this.amount.value
+      const temp_amount = this.fiveToOne.value
       this.setState({
         amount: temp_amount,
       })
@@ -74,16 +77,14 @@ class Convert extends Component {
     }}>
 
 
-    <div className="form-group mr-sm-2">
-
-    <div className="form-group mr-sm-2"></div>
+<div className="form-group mr-sm-2">
     <input
-      id= 'amount'   
+      id= 'fiveToOne'   
       type="text"
       className="form-control-sm"
       placeholder="Convert to Ones"
       required
-      ref={(input) => {this.amount = input}}
+      ref={(input) => {this.fiveToOne = input}}
     />
 
 
@@ -91,14 +92,14 @@ class Convert extends Component {
     <input
       type='submit'
       className='btn btn-block btn-primary'
-      value='Convert to Ones'
+      value='Fives to Ones'
     />
     </div></form>   
 
 
     <form onSubmit={(event) => {
       event.preventDefault()
-      const temp_amount = this.amount.value
+      const temp_amount = this.oneToFive.value
       this.setState({
         amount: temp_amount,
       })
@@ -106,16 +107,14 @@ class Convert extends Component {
     }}>
 
 
-    <div className="form-group mr-sm-2">
-
-    <div className="form-group mr-sm-2"></div>
+<div className="form-group mr-sm-2">
     <input
-      id= 'amount'   
+      id= 'oneToFive'   
       type="text"
       className="form-control-sm"
       placeholder="Convert to Fives"
       required
-      ref={(input) => {this.amount = input}}
+      ref={(input) => {this.oneToFive = input}}
     />
 
 
@@ -123,13 +122,13 @@ class Convert extends Component {
     <input
       type='submit'
       className='btn btn-block btn-primary'
-      value='Convert to Fives'
+      value='Ones to Fives'
     />
     </div></form> 
 
     <ul>
-      <li>Ones' Address:  0xB71a1D29DA98f68Bc0c7177E4a94f17684520614</li>
-      <li>Five's Address:  0x7C8E67FeB0d186Bb62311C68648a2463b118A1D3</li>
+      <li>Ones' Address:  0xfB64a354ed9e8Cb05b5A60b2037fd08AF387e5A0</li>
+      <li>Five's Address:  0x528B9605973Ca2bdb42c7F5cACf6629B589a9794</li>
     </ul>        
     </View>
     )

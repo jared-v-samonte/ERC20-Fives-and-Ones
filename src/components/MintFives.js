@@ -23,7 +23,7 @@ class MintFives extends Component {
     const number = utils.parseUnits(this.state.amount, 18)
 
     console.log("Minting this amount:", this.state.amount)
-    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0x93B797c488e1541332762e1480b943F94D28D851")
+    const oof = new ContractFactory(oof_abi(), oof_bytecode(), signer).attach("0xE41d8b14cDD350ceA154e1e28AbF25802ec9A272")
     await oof.mint_fives(signersAddress, number);
     console.log("all done!!")
     }
@@ -84,7 +84,7 @@ class MintFives extends Component {
     </div></form> 
 
     <ul>
-      <li>Five's Address:  0x7C8E67FeB0d186Bb62311C68648a2463b118A1D3</li>
+      <li>Five's Address:  0x528B9605973Ca2bdb42c7F5cACf6629B589a9794</li>
     </ul>    
     </View>
     )
